@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 
 <head>
   <meta charset="UTF-8">
@@ -12,6 +12,19 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <title>ร้าน Fashion Store</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #d4a574;     /* สีทองนู้ด (เปลี่ยนได้) */
+    --secondary: #2c3e50;
+    --accent: #e74c3c;
+  }
+  body { font-family: 'Kanit', sans-serif; }
+  .btn-primary, #modal-addcart { background: var(--primary) !important; border: none !important; }
+  .btn-primary:hover, #modal-addcart:hover { background: #c69564 !important; }
+  h1, h2, h3, h4, h5 { font-family: 'Prompt', sans-serif; color: var(--secondary); }
+  .highlight { color: var(--primary); }
+</style>
 </head>
 
 <body>
@@ -44,16 +57,21 @@
         </div>
         <div class="product-toolbar">
           <div class="toolbar-group">
-            <label for="filter-category">หมวดหมู่:</label>
-            <select id="filter-category">
-              <option value="all">ทั้งหมด</option>
-              <option value="tshirt">เสื้อยืด</option>
-              <option value="shirt">เชิ้ต</option>
-              <option value="pants">กางเกง</option>
-              <option value="set">เซ็ต</option>
-              <option value="hat">หมวก</option>
-              <option value="other">อื่นๆ</option>
-            </select>
+            <!-- Dropdown หมวดหมู่สวยใหม่ (rounded, shadow) -->
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="filterCategory" data-bs-toggle="dropdown" aria-expanded="false">
+                หมวดหมู่: ทั้งหมด
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="filterCategory">
+                <li><a class="dropdown-item" href="#" data-category="all">ทั้งหมด</a></li>
+                <li><a class="dropdown-item" href="#" data-category="tshirt">เสื้อยืด</a></li>
+                <li><a class="dropdown-item" href="#" data-category="shirt">เชิ้ต</a></li>
+                <li><a class="dropdown-item" href="#" data-category="pants">กางเกง</a></li>
+                <li><a class="dropdown-item" href="#" data-category="set">เซ็ต</a></li>
+                <li><a class="dropdown-item" href="#" data-category="hat">หมวก</a></li>
+                <li><a class="dropdown-item" href="#" data-category="other">อื่นๆ</a></li>
+              </ul>
+            </div>
           </div>
           <div class="toolbar-group">
             <button class="chip is-active" data-gender="all">ทั้งหมด</button>

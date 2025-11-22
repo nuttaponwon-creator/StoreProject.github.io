@@ -65,3 +65,19 @@ document.addEventListener("DOMContentLoaded", () => {
   `).join("");
 });
 
+// ใน renderProducts.js ก่อน render จริง
+productGrid.innerHTML = Array(6).fill('').map(() => `
+  <div class="col-md-4 mb-4">
+    <div class="card h-100">
+      <div class="skeleton skeleton-img"></div>
+      <div class="card-body">
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text" style="width:60%"></div>
+        <div class="skeleton skeleton-price"></div>
+      </div>
+    </div>
+  </div>
+`).join('');
+
+// แล้วค่อย render จริงหลังจากนั้น 1 วินาที (หรือเมื่อรูปโหลดเสร็จ)
+setTimeout(() => renderProducts(products), 800);

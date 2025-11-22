@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-
+  
   // ---------------- Cart Panel ----------------
   const cartToggle = document.getElementById("cart-toggle");
   const cartPanel = document.getElementById("cart-panel");

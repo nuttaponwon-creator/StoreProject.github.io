@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <title>ร้าน Fashion Store</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #d4a574;
+      --secondary: #2c3e50;
+      --accent: #e74c3c;
+    }
+    body { font-family: 'Kanit', sans-serif; }
+    .btn-primary, #modal-addcart { background: var(--primary) !important; border: none !important; }
+    .btn-primary:hover, #modal-addcart:hover { background: #c69564 !important; }
+    h1, h2, h3, h4, h5 { font-family: 'Prompt', sans-serif; color: var(--secondary); }
+    .highlight { color: var(--primary); }
+  </style>
 </head>
-
 <body>
   <header class="navbar">
     <div class="container nav-inner">
@@ -30,80 +38,63 @@
           ตะกร้า (<span id="cart-count">0</span>)
         </button>
       </div>
-      <button class="menu-toggle" id="menu-toggle" aria-label="เปิดเมนู">
-        ☰
-      </button>
+      <button class="menu-toggle" id="menu-toggle" aria-label="เปิดเมนู">☰</button>
     </div>
   </header>
   <main>
-
-    <!-- หน้าแรก -->
+    <!-- Hero Carousel (ปรับ responsive) -->
     <section id="home">
-  <!-- Hero Carousel -->
-  <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
-    <!-- Indicators (จุดเล็กๆ ข้างล่าง) -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
-    </div>
-
-    <div class="carousel-inner">
-      <!-- สไลด์ที่ 1 -->
-      <div class="carousel-item active">
-        <img src="https://images.pexels.com/photos/1832959/pexels-photo-1832959.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" class="d-block w-100" alt="Fashion 1">
-        <div class="carousel-caption">
-          <h1>LET'S<br>EXPLORE<br><span class="highlight">UNIQUE</span><br>CLOTHES.</h1>
-          <p>Live for influential and innovative fashion</p>
-          <a href="#products" class="btn-primary">SHOP NOW</a>
+      <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
         </div>
-      </div>
-
-      <!-- สไลด์ที่ 2 -->
-      <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/3760613/pexels-photo-3760613.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" class="d-block w-100" alt="Fashion 2">
-        <div class="carousel-caption">
-          <h1>NEW<br>ARRIVAL<br><span class="highlight">2025</span></h1>
-          <p>คอลเลกชันใหม่ล่าสุด มาแล้ว!</p>
-          <a href="product.html" class="btn-primary">ดูเลย</a>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://images.pexels.com/photos/1832959/pexels-photo-1832959.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" class="d-block w-100" alt="Fashion 1">
+            <div class="carousel-caption">
+              <h1>LET'S<br>EXPLORE<br><span class="highlight">UNIQUE</span><br>CLOTHES.</h1>
+              <p>Live for influential and innovative fashion</p>
+              <a href="#products" class="btn-primary">SHOP NOW</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://images.pexels.com/photos/3760613/pexels-photo-3760613.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" class="d-block w-100" alt="Fashion 2">
+            <div class="carousel-caption">
+              <h1>NEW<br>ARRIVAL<br><span class="highlight">2025</span></h1>
+              <p>คอลเลกชันใหม่ล่าสุด มาแล้ว!</p>
+              <a href="product.html" class="btn-primary">ดูเลย</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" class="d-block w-100" alt="Fashion 3">
+            <div class="carousel-caption text-start">
+              <h1>SALE<br>UP TO<br><span class="highlight">50%</span></h1>
+              <p>ลดสูงสุดครึ่งราคา ช้อปด่วน!</p>
+              <a href="product.html" class="btn-primary">ช้อปเลย</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="https://images.pexels.com/photos/157675/fashion-man-person-african-157675.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" class="d-block w-100" alt="Men Fashion">
+            <div class="carousel-caption text-end">
+              <h1>MEN'S<br><span class="highlight">COLLECTION</span></h1>
+              <p>สไตล์ผู้ชายที่ใช่ ในแบบของคุณ</p>
+              <a href="product.html" class="btn-primary">เลือกดูเลย</a>
+            </div>
+          </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-
-      <!-- สไลด์ที่ 3 -->
-      <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" class="d-block w-100" alt="Fashion 3">
-        <div class="carousel-caption text-start">
-          <h1>SALE<br>UP TO<br><span class="highlight">50%</span></h1>
-          <p>ลดสูงสุดครึ่งราคา ช้อปด่วน!</p>
-          <a href="product.html" class="btn-primary">ช้อปเลย</a>
-        </div>
-      </div>
-
-      <!-- สไลด์ที่ 4 (เพิ่มเองได้เรื่อยๆ) -->
-      <div class="carousel-item">
-        <img src="https://images.pexels.com/photos/157675/fashion-man-person-african-157675.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" class="d-block w-100" alt="Men Fashion">
-        <div class="carousel-caption text-end">
-          <h1>MEN'S<br><span class="highlight">COLLECTION</span></h1>
-          <p>สไตล์ผู้ชายที่ใช่ ในแบบของคุณ</p>
-          <a href="product.html" class="btn-primary">เลือกดูเลย</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ปุ่มลูกศร ซ้าย-ขวา -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</section>
-
-
+    </section>
 
     <section id="products" class="section">
       <div class="container">
@@ -111,29 +102,21 @@
           <h2>สินค้าแนะนำ</h2>
           <p>เลือก Mix & Match ให้เข้ากับสไตล์ของคุณ</p>
         </div>
-        
-        
-        <div class="product-grid"  id="product-recommend">
-          <!-- product-card -->
-          
+        <div class="product-grid" id="product-recommend">
+          <!-- JS จะ render ที่นี่ -->
         </div>
         <div style="display: flex; justify-content: center;">
           <a href="product.html" class="btn btn-view-all">ดูสินค้าทั้งหมด</a>
         </div>
+      </div>
     </section>
 
     <section id="about" class="section section-alt">
       <div class="container two-col">
         <div>
           <h2>เกี่ยวกับร้าน</h2>
-          <p>
-            ร้าน FASHION เน้นเสื้อผ้าแนวมินิมอล ใส่ง่าย เข้ากับทุกวัน
-            เนื้อผ้านุ่มใส่สบาย คัดแบบใหม่ทุกสัปดาห์
-          </p>
-          <p>
-            มีทั้งแบบผู้หญิง ผู้ชาย และ Unisex
-            เหมาะกับคนที่ชอบแต่งตัวเรียบแต่ดูมีสไตล์
-          </p>
+          <p>ร้าน FASHION เน้นเสื้อผ้าแนวมินิมอล ใส่ง่าย เข้ากับทุกวัน เนื้อผ้านุ่มใส่สบาย คัดแบบใหม่ทุกสัปดาห์</p>
+          <p>มีทั้งแบบผู้หญิง ผู้ชาย และ Unisex เหมาะกับคนที่ชอบแต่งตัวเรียบแต่ดูมีสไตล์</p>
         </div>
         <div class="about-highlights">
           <div class="highlight-card">
@@ -147,6 +130,7 @@
         </div>
       </div>
     </section>
+
     <section id="contact" class="section">
       <div class="container two-col">
         <div>
@@ -176,6 +160,7 @@
       </div>
     </section>
   </main>
+
   <aside class="cart-panel" id="cart-panel" aria-hidden="true">
     <div class="cart-header">
       <h2>ตะกร้าสินค้า</h2>
@@ -195,6 +180,7 @@
     </div>
   </aside>
   <div class="cart-overlay" id="cart-overlay"></div>
+
   <footer class="footer">
     <div class="container footer-inner">
       <p>© 2025 Unicon FASHION. All rights reserved.</p>
@@ -205,24 +191,16 @@
   <!-- Product Popup Modal -->
   <div id="productModal" class="modal">
     <div class="modal-content">
-
-      <!-- ปุ่มปิด -->
       <span class="close-modal" id="modal-close">&times;</span>
-
       <div class="modal-body">
-
-        <!-- รูปสินค้า -->
         <div class="modal-image">
           <img id="modal-img" src="" alt="product">
         </div>
-
-        <!-- ข้อมูลสินค้า -->
         <div class="modal-info">
           <h2 id="modal-title"></h2>
-          <span class="text-muted">หมวด: </span><span class="text-muted" id="modal-category"></span>
+          <span class="text-muted">หมวด: </span><span id="modal-category"></span>
           <h6 class="pt-4">รายละเอียด</h6>
           <p id="modal-description"></p>
-
           <label>จำนวน</label>
           <div class="qty-box">
             <button id="qty-decrease">-</button>
@@ -230,22 +208,16 @@
             <button id="qty-increase">+</button>
           </div>
           <h3 id="modal-price"></h3>
-          <!-- ปุ่มใน popup ต้องใช้ id แยกออกจากปุ่มสินค้า -->
-          <button id="modal-addcart" class="btn-primary btn-full " data-name="" data-price="">
+          <button id="modal-addcart" class="btn-primary btn-full">
             เพิ่มลงตะกร้า
           </button>
-
-
         </div>
       </div>
     </div>
   </div>
 
-
   <script src="js/renderProducts.js"></script>
   <script src="js/products.js"></script>
   <script src="js/script.js"></script>
-  
 </body>
-
 </html>
