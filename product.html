@@ -71,8 +71,13 @@
       </nav>
       <div class="nav-actions">
         <input type="text" class="search-input" id="search-input" placeholder="ค้นหาสินค้า..." />
-        <button class="icon-btn" id="cart-toggle">
-          ตะกร้า (<span id="cart-count">0</span>)
+        <button class="icon-btn position-relative ms-3" id="cart-toggle" style="background: none; border: none;">
+          <i class="bi bi-handbag" style="font-size: 1.5rem; color: #333;"></i>
+
+          <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            style="font-size: 0.6rem;">
+            0
+          </span>
         </button>
       </div>
       <button class="menu-toggle" id="menu-toggle" aria-label="เปิดเมนู">☰</button>

@@ -3,7 +3,7 @@
 // ====================================
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// แก้ไข 1: อัปเดต UI ตะกร้าให้แสดงไซส์
+// แก้ไข 1: อัปเดต UI ตะกร้าให้แสดงรูปภาพ + ชื่อ + ไซส์
 function updateCartUI() {
   localStorage.setItem("cart", JSON.stringify(cart));
   const cartItemsEl = document.getElementById("cart-items");
@@ -23,15 +23,26 @@ function updateCartUI() {
     cart.forEach((item, index) => {
       const li = document.createElement("li");
       li.className = "cart-item-row";
+      
+      // ปรับแต่ง CSS แบบ Inline ให้เลย (จะได้ไม่ต้องไปแก้ CSS เพิ่ม)
+      li.style.borderBottom = "1px solid #eee";
+      li.style.padding = "10px 0";
 
-      // ปรับ HTML ในตะกร้าให้แสดงชื่อและไซส์สวยงาม
       li.innerHTML = `
-        <div style="display: flex; flex-direction: column; flex: 1;">
-          <span style="font-weight: 600;">${item.name}</span>
-          <span style="font-size: 0.85rem; color: #666;">ไซส์: ${item.size || '-'}</span>
+        <div style="display: flex; align-items: center; width: 100%;">
+          <img src="${item.img || 'https://via.placeholder.com/50'}" alt="${item.name}" 
+               style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px; margin-right: 10px; border: 1px solid #ddd;">
+          
+          <div style="display: flex; flex-direction: column; flex: 1;">
+            <span style="font-weight: 600; font-size: 14px;">${item.name}</span>
+            <span style="font-size: 0.85rem; color: #666;">ไซส์: ${item.size || '-'}</span>
+          </div>
+
+          <div style="text-align: right;">
+             <div style="font-weight: bold; font-size: 14px;">฿${item.price.toLocaleString("th-TH", { maximumFractionDigits: 0 })}</div>
+             <button class="cart-remove-btn" data-index="${index}" style="border: none; background: none; color: #ff4d4d; font-size: 12px; cursor: pointer; margin-top: 5px;">ลบสินค้า</button>
+          </div>
         </div>
-        <span style="margin-right: 10px;">฿${item.price.toLocaleString("th-TH", { maximumFractionDigits: 0 })}</span>
-        <button class="cart-remove-btn" data-index="${index}">✕</button>
       `;
 
       cartItemsEl.appendChild(li);
@@ -47,11 +58,12 @@ function updateCartUI() {
   cartCountEl.textContent = String(cart.length);
 }
 
-// แก้ไข 2: รับค่า size เข้ามาบันทึกด้วย (ค่า default เป็น '-')
-function addToCart(name, price, size = '-') {
+// แก้ไข 2: รับค่า img เข้ามาบันทึกด้วย
+function addToCart(name, price, img, size = '-') {
   cart.push({
     name,
     price: Number(price),
+    img, // บันทึกรูป
     size
   });
   updateCartUI();
@@ -120,21 +132,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------------- Add to Cart (จาก Card หน้าแรก - ไม่ผ่าน Modal) ----------------
   document.body.addEventListener("click", (e) => {
     const target = e.target;
-    // ถ้ากดปุ่มเพิ่มลงตะกร้าโดยตรง (ถ้ามี) ให้ใส่ไซส์ default
     if (target.classList.contains("add-to-cart") && target.id !== "modal-addcart") {
-      // เพื่อความชัวร์ ให้เปิด Modal แทนการใส่ตะกร้าเลย จะได้เลือกไซส์ได้
-      // แต่ถ้าต้องการใส่เลย ก็ใช้โค้ดเดิม:
-      // const name = target.dataset.name;
-      // const price = target.dataset.price;
-      // addToCart(name, price);
-      // openCart();
+       // ถ้าจะเปิดใช้ ต้องแก้ให้ส่ง img ด้วย (แต่ตอนนี้ปิดไว้ตามโค้ดเดิม)
     }
   });
 
   // ---------------- Search & Filters ----------------
   const searchInput = document.getElementById("search-input");
-  let activeCategory = "all"; // เก็บค่าหมวดหมู่ปัจจุบัน
-  let activeGender = "all"; // เก็บค่าเพศปัจจุบัน
+  let activeCategory = "all";
+  let activeGender = "all";
 
   function applyFilters() {
     const searchValue = searchInput ? searchInput.value.toLowerCase().trim() : "";
@@ -143,54 +149,42 @@ document.addEventListener("DOMContentLoaded", () => {
     productCards.forEach((card) => {
       const cardCategory = (card.dataset.category || "").toLowerCase();
       const cardGenderRaw = (card.dataset.gender || "").toLowerCase();
-      // แปลง gender เป็น array เพื่อรองรับสินค้าที่มีหลายเพศ เช่น ["man","woman"]
       const cardGenders = cardGenderRaw.includes(",") ? cardGenderRaw.split(",") : [cardGenderRaw];
       const titleText = (card.dataset.name || "").toLowerCase();
 
-      // Logic การตรวจสอบ
       const matchCategory = activeCategory === "all" || cardCategory === activeCategory;
       const matchGender = activeGender === "all" || cardGenders.includes(activeGender);
       const matchSearch = !searchValue || titleText.includes(searchValue);
 
       if (matchCategory && matchGender && matchSearch) {
-        card.style.display = ""; // แสดง
+        card.style.display = ""; 
         card.classList.add("fade-in");
       } else {
-        card.style.display = "none"; // ซ่อน
+        card.style.display = "none"; 
         card.classList.remove("fade-in");
       }
     });
   }
 
-  // Event Listener สำหรับ Dropdown หมวดหมู่ (Bootstrap)
   const categoryLinks = document.querySelectorAll(".dropdown-item[data-category]");
-  const categoryButtonLabel = document.getElementById("filterCategory"); // ปุ่ม Dropdown
+  const categoryButtonLabel = document.getElementById("filterCategory");
 
   categoryLinks.forEach(link => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      // 1. อัปเดตตัวแปร
       activeCategory = link.dataset.category;
-
-      // 2. เปลี่ยนข้อความบนปุ่ม
       if (categoryButtonLabel) {
         categoryButtonLabel.textContent = `หมวดหมู่: ${link.textContent}`;
       }
-
-      // 3. เรียกฟังก์ชันกรอง
       applyFilters();
     });
   });
 
-  // Event Listener สำหรับ Gender Chips
   const genderChips = document.querySelectorAll(".chip");
   genderChips.forEach((chip) => {
     chip.addEventListener("click", () => {
-      // ปรับ UI ปุ่ม
       genderChips.forEach((c) => c.classList.remove("is-active"));
       chip.classList.add("is-active");
-
-      // อัปเดตตัวแปรและกรอง
       activeGender = chip.dataset.gender || "all";
       applyFilters();
     });
@@ -199,12 +193,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (searchInput) {
     searchInput.addEventListener("input", applyFilters);
   }
-}); // <--- ปิดวงเล็บ DOMContentLoaded ที่เคยหายไป
+});
 
 // ====================================
 //  PRODUCT MODAL
 // ====================================
-// แก้ไข 3: รับค่า sizes มาสร้างตัวเลือก Dropdown
 function openProductModal(card) {
   document.getElementById("productModal").style.display = "flex";
 
@@ -212,8 +205,7 @@ function openProductModal(card) {
   const price = card.dataset.price;
   const category = card.dataset.category;
   const description = card.dataset.description;
-  const img = card.dataset.img;
-  // ดึงข้อมูลไซส์ที่ส่งมาจาก HTML (ที่แก้ใน renderProducts.js)
+  const img = card.dataset.img; // รับค่ารูป
   const sizesRaw = card.dataset.sizes || "";
   const sizes = sizesRaw ? sizesRaw.split(",") : [];
 
@@ -224,10 +216,9 @@ function openProductModal(card) {
   document.getElementById("modal-img").src = img;
   document.getElementById("qty-input").value = 1;
 
-  // สร้างตัวเลือกไซส์ใน Dropdown
   const sizeSelect = document.getElementById("modal-size-select");
   if (sizeSelect) {
-    sizeSelect.innerHTML = ""; // ล้างค่าเก่า
+    sizeSelect.innerHTML = "";
     if (sizes.length > 0 && sizes[0] !== "") {
       sizes.forEach(size => {
         const option = document.createElement("option");
@@ -236,7 +227,6 @@ function openProductModal(card) {
         sizeSelect.appendChild(option);
       });
     } else {
-      // กรณีไม่มีไซส์
       const option = document.createElement("option");
       option.value = "Free Size";
       option.text = "Free Size";
@@ -247,6 +237,7 @@ function openProductModal(card) {
   const addBtn = document.getElementById("modal-addcart");
   addBtn.dataset.name = name;
   addBtn.dataset.price = price;
+  addBtn.dataset.img = img; // แก้ไข 3: ฝากรูปไว้ที่ปุ่มเพิ่มลงตะกร้า
 }
 
 document.getElementById("modal-close").onclick = function() {
@@ -273,19 +264,20 @@ document.getElementById("qty-decrease").onclick = () => {
 };
 
 // ====================================
-//  ADD CART FROM MODAL (เวอร์ชันแก้)
+//  ADD CART FROM MODAL (MAIN LOGIC)
 // ====================================
 document.getElementById("modal-addcart").onclick = function() {
   const name = this.dataset.name;
   const price = this.dataset.price;
+  const img = this.dataset.img; // แก้ไข 4: ดึงรูปจากปุ่ม
   const qty = Number(document.getElementById("qty-input").value);
 
-  // ดึงค่าไซส์ที่ลูกค้าเลือก
   const sizeSelect = document.getElementById("modal-size-select");
   const selectedSize = sizeSelect ? sizeSelect.value : "Free Size";
 
   for (let i = 0; i < qty; i++) {
-    addToCart(name, price, selectedSize); // ส่งไซส์ไปด้วย
+    // ส่ง img เข้าไปในฟังก์ชัน addToCart
+    addToCart(name, price, img, selectedSize); 
   }
 
   document.getElementById("productModal").style.display = "none";
@@ -300,20 +292,20 @@ window.addEventListener("scroll", function() {
     navbar.classList.remove("scrolled");
   }
 });
+
 // back-to-top
 const btn = document.getElementById("btn-back-to-top");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 200) {
+    btn.classList.add("show");
+  } else {
+    btn.classList.remove("show");
+  }
+});
 
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 200) {
-      btn.classList.add("show");
-    } else {
-      btn.classList.remove("show");
-    }
+btn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
   });
-
-  btn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  });
+});
